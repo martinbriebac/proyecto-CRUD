@@ -1,18 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event){
-    let listaTareas = [
-    {
-    responsable: 'Juan',
-    tarea: 'comprar pan'
-    },
-    {
-    responsable: 'Pedro',
-    tarea: 'hacer aseo'
-    },
-    {
-    responsable: 'Diego',
-    tarea: 'pasear el perro'
-    }
-    ]
+    let listaTareas = []
     
     // function agregaTarea(tarea, responsable){
     //     let id = listaTareas[listaTareas.length-1]?.id || 0;
@@ -43,31 +30,58 @@ document.addEventListener("DOMContentLoaded", function(event){
     //     listaTareas = filtrado
     // }
     
-
-
-
     let lista = document.getElementById('listaElementos')
-    
-    function agregaTarea(){
+
+    function listarTarea(){
+        lista.innerHTML = ''
         listaTareas.forEach((tarea, index) => {
             lista.innerHTML += `
             <tr>
             <th scope="row">${index+1}</th>
             <td>${tarea.responsable}</td>
             <td>${tarea.tarea}</td>
-            <td><button type="button" class="mx-5 btn btn-primary">Editar</button></td>
-            <td><button type="button" class="mx-5 btn btn-danger">Eliminar</button></td>
+            <td><button type="button" class="mx-5 btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button></td>
+            <td><button type="button" class="mx-5 btn btn-danger borrar" id=${tarea.responsable}><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>
             `
-
+            
+        })
+        
+        let botonBorrar = Array.from(document.getElementsByClassName('mx-5 btn btn-danger borrar'))
+        botonBorrar.forEach((button)=>{
+            button.addEventListener('click', (event)=>borrarTarea(event.target.id))
         })
     }
-    agregaTarea()
+    
+    let inputResponsable = document.getElementById('responsable')
+    let inputTarea = document.getElementById('tarea')
+    let addButton = document.getElementById('botonEnviar')
+    
+    addButton.addEventListener('click', (event)=>agregaTarea(event))
+    
+    function agregaTarea(event){
+        event.preventDefault()
+        let nuevaTarea = {
+            responsable: inputResponsable.value,
+            tarea: inputTarea.value
+        }
+        listaTareas.push(nuevaTarea)
+        listarTarea()
+        inputResponsable.value = ''
+        inputTarea.value = ''
+    }
+    
+    
+    function borrarTarea(responsable){
+        listaTareas = listaTareas.filter((tarea)=>tarea.responsable!==responsable)
+        listarTarea()
+    }
     
     document.getElementById('clearList').addEventListener('click', function(event){
         event.preventDefault()
         window.localStorage.removeItem('lista')
         document.getElementById('listaElementos').innerHTML = ''
+        listaTareas = []
     })
 
 })

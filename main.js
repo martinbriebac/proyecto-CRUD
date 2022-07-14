@@ -1,16 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event){
     let listaTareas = []
-    
-    // function agregaTarea(tarea, responsable){
-    //     let id = listaTareas[listaTareas.length-1]?.id || 0;
-    //     let nuevaTarea = {
-    //         id: id+1,
-    //         tarea: tarea,
-    //         responsable: responsable,
-    //     };
-    //     listaTareas.push(nuevaTarea)
-    //     console.log(listaTareas)
-    // }
 
     
     // function editaTarea(id, tarea, responsable){
@@ -33,16 +22,22 @@ document.addEventListener("DOMContentLoaded", function(event){
             <th scope="row">${index+1}</th>
             <td>${tarea.responsable}</td>
             <td>${tarea.tarea}</td>
-            <td><button type="button" class="mx-5 btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button></td>
-            <td><button type="button" class="mx-5 btn btn-danger borrar" id=${tarea.id}><i class="fa-regular fa-trash-can"></i></button></td>
+            <td>
+            <div class="form-check form-switch justify-content-end">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Tarea completada</label>
+            </div>
+            </td>
+            <td><button type="button" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button></td>
+            <td><button type="button" class="btn btn-danger borrar" id=${tarea.id}><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>
             `
             
         })
         
-        let botonBorrar = Array.from(document.getElementsByClassName('mx-5 btn btn-danger borrar'))
+        let botonBorrar = Array.from(document.getElementsByClassName('btn btn-danger borrar'))
         botonBorrar.forEach((button)=>{
-            button.addEventListener('click', borrarTarea)
+            button.addEventListener('click', (event)=>borrarTarea(event.target.id))
         })
     }
     
@@ -67,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
     
     
-    function borrarTarea(){
+    function borrarTarea(id){
         listaTareas = listaTareas.filter((id)=>tarea.id!==id)
         listarTarea()
     }

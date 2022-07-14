@@ -29,3 +29,17 @@ function eliminarTarea(id){
     listaTareas = filtrado
 }
 
+let lista = document.getElementById('listaElementos')
+
+lista.innerHTML = `
+<tr>
+<th scope="row">1</th>
+<td>Mark</td>
+<td>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+  Facilis ducimus, quos incidunt nulla eaque fugiat, placeat excepturi eius,
+  non doloribus aliquam. Quasi autem itaque, officiis maxime accusamus molestias rerum aut.</td>
+<td><button type="button" class="mx-5 btn btn-primary">Editar</button></td>
+<td><button type="button" class="mx-5 btn btn-danger">Eliminar</button></td>
+</tr>
+`
+console.log(lista)

@@ -42,4 +42,3 @@ lista.innerHTML = `
 <td><button type="button" class="mx-5 btn btn-danger">Eliminar</button></td>
 </tr>
 `
-console.log(lista)

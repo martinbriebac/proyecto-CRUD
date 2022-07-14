@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     //     listaTareas.push(nuevaTarea)
     //     console.log(listaTareas)
     // }
-    
-    // function imprimeTarea() {
-    //     console.log(listaTareas)
-    // }
+
     
     // function editaTarea(id, tarea, responsable){
     //     listaTareas.forEach((element) => {
@@ -24,11 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     //         }
     //     })
     // }
-    
-    // function eliminarTarea(id){
-    //     let filtrado = listaTareas.filter(element => element.id !== id)
-    //     listaTareas = filtrado
-    // }
+
     
     let lista = document.getElementById('listaElementos')
 
@@ -41,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function(event){
             <td>${tarea.responsable}</td>
             <td>${tarea.tarea}</td>
             <td><button type="button" class="mx-5 btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button></td>
-            <td><button type="button" class="mx-5 btn btn-danger borrar" id=${tarea.responsable}><i class="fa-regular fa-trash-can"></i></button></td>
+            <td><button type="button" class="mx-5 btn btn-danger borrar" id=${tarea.id}><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>
             `
             
@@ -49,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event){
         
         let botonBorrar = Array.from(document.getElementsByClassName('mx-5 btn btn-danger borrar'))
         botonBorrar.forEach((button)=>{
-            button.addEventListener('click', (event)=>borrarTarea(event.target.id))
+            button.addEventListener('click', borrarTarea)
         })
     }
     
@@ -61,7 +54,9 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     function agregaTarea(event){
         event.preventDefault()
+        let id = listaTareas[listaTareas.length-1]?.id || 0;
         let nuevaTarea = {
+            id: id+1,
             responsable: inputResponsable.value,
             tarea: inputTarea.value
         }
@@ -72,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
     
     
-    function borrarTarea(responsable){
-        listaTareas = listaTareas.filter((tarea)=>tarea.responsable!==responsable)
+    function borrarTarea(){
+        listaTareas = listaTareas.filter((id)=>tarea.id!==id)
         listarTarea()
     }
     
@@ -85,3 +80,4 @@ document.addEventListener("DOMContentLoaded", function(event){
     })
 
 })
+

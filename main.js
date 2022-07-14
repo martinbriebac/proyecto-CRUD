@@ -28,3 +28,4 @@ function eliminarTarea(id){
     let filtrado = listaTareas.filter(element => element.id !== id)
     listaTareas = filtrado
 }
+

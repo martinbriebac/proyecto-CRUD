@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     let lista = document.getElementById('listaElementos')
     
     function listarTarea(){
+        let storedList = localStorage.getItem('lista')
+        listaTareas = JSON.parse(storedList)
         lista.innerHTML = ''
         listaTareas.forEach((tarea, index) => {
             lista.innerHTML += `
@@ -47,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function(event){
             tarea: inputTarea.value
         }
         listaTareas.push(nuevaTarea)
+        localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
         inputResponsable.value = ''
         inputTarea.value = ''
@@ -54,13 +57,12 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     let botonBorrar = Array.from(document.getElementsByClassName('btn btn-danger borrar'))
     botonBorrar.forEach((button)=>{
-        button.addEventListener('click', (event)=>borrarTarea(event.target.id))
+        button.addEventListener('click', (event) => borrarTarea(event.target.id))
     })
     
     function borrarTarea(id){
-        listaTareas = listaTareas.filter(element => element.id !== id)
+        listaTareas = listaTareas.filter((element) => element.id !== id)
         listarTarea()
-        console.log(listaTareas)
     }
     
     // let botonEditar = Array.from(document.getElementsByClassName('btn btn-danger editar'))
@@ -71,8 +73,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     // function editarTarea(id, tarea, responsable){
     //     listaTareas.forEach((element) => {
     //         if(id === element.id){
-    //             element.responsable = responsable,
-    //             element.tarea = tarea
+    //             element.responsable = inputResponsable,
+    //             element.tarea = inputTarea
     //         }
     //     })
     // }

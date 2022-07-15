@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", function(event){
     let listaTareas = []
-
     
     
     let lista = document.getElementById('listaElementos')
     
     function listarTarea(){
-        let storedList = localStorage.getItem('lista')
-        listaTareas = JSON.parse(storedList)
+        let listaGuardada = localStorage.getItem('lista')
+            if(listaGuardada == null){
+                listaTareas = []
+            }else{
+                listaTareas = JSON.parse(listaGuardada)
+            }
         lista.innerHTML = ''
         listaTareas.forEach((tarea, index) => {
             lista.innerHTML += `
@@ -42,6 +45,12 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     function agregaTarea(event){
         event.preventDefault()
+        // let listaGuardada = localStorage.getItem('lista')
+        // if(listaGuardada == null){
+        //     listaTareas = []
+        // }else{
+        //     listaTareas = JSON.parse(listaGuardada)
+        // }
         let id = listaTareas[listaTareas.length-1]?.id || 0;
         let nuevaTarea = {
             id: id+1,
@@ -61,7 +70,16 @@ document.addEventListener("DOMContentLoaded", function(event){
     })
     
     function borrarTarea(id){
-        listaTareas = listaTareas.filter((element) => element.id !== id)
+        let listaGuardada = localStorage.getItem('lista')
+        if(listaGuardada == null){
+            listaTareas = []
+        }else{
+            listaTareas = JSON.parse(listaGuardada)
+        }
+        let id1 = parseInt(id)
+        listaTareas = listaTareas.filter(element => element.id !== id1)
+        console.log(listaTareas)
+        localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
     }
     
@@ -85,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function(event){
         document.getElementById('listaElementos').innerHTML = ''
         listaTareas = []
     })
-    
+
+    listarTarea()
 })
 

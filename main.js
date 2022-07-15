@@ -2,18 +2,9 @@ document.addEventListener("DOMContentLoaded", function(event){
     let listaTareas = []
 
     
-    // function editaTarea(id, tarea, responsable){
-    //     listaTareas.forEach((element) => {
-    //         if(id === element.id){
-    //             element.tarea = tarea,
-    //             element.responsable = responsable
-    //         }
-    //     })
-    // }
-
     
     let lista = document.getElementById('listaElementos')
-
+    
     function listarTarea(){
         lista.innerHTML = ''
         listaTareas.forEach((tarea, index) => {
@@ -28,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function(event){
             <label class="form-check-label" for="flexSwitchCheckDefault">Tarea completada</label>
             </div>
             </td>
-            <td><button type="button" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button></td>
+            <td><button type="button" class="btn btn-primary editar"><i class="fa-regular fa-pen-to-square"></i></button></td>
             <td><button type="button" class="btn btn-danger borrar" id=${tarea.id}><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>
             `
@@ -61,11 +52,30 @@ document.addEventListener("DOMContentLoaded", function(event){
         inputTarea.value = ''
     }
     
+    let botonBorrar = Array.from(document.getElementsByClassName('btn btn-danger borrar'))
+    botonBorrar.forEach((button)=>{
+        button.addEventListener('click', (event)=>borrarTarea(event.target.id))
+    })
     
     function borrarTarea(id){
-        listaTareas = listaTareas.filter((id)=>tarea.id!==id)
+        listaTareas = listaTareas.filter(element => element.id !== id)
         listarTarea()
+        console.log(listaTareas)
     }
+    
+    // let botonEditar = Array.from(document.getElementsByClassName('btn btn-danger editar'))
+    // botonEditar.forEach((button)=>{
+    //     button.addEventListener('click', (event)=>editarTarea(event.target.id))
+    // })
+
+    // function editarTarea(id, tarea, responsable){
+    //     listaTareas.forEach((element) => {
+    //         if(id === element.id){
+    //             element.responsable = responsable,
+    //             element.tarea = tarea
+    //         }
+    //     })
+    // }
     
     document.getElementById('clearList').addEventListener('click', function(event){
         event.preventDefault()
@@ -73,6 +83,6 @@ document.addEventListener("DOMContentLoaded", function(event){
         document.getElementById('listaElementos').innerHTML = ''
         listaTareas = []
     })
-
+    
 })
 

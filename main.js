@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
     
     function borrarTarea(id){
-        listaTareas = listaTareas.filter(element => element.id !== id)
+        listaTareas = listaTareas.filter(element => element.id != id)
         localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
     }
@@ -88,10 +88,11 @@ document.addEventListener("DOMContentLoaded", function(event){
                 tarea.responsable = inputResponsable.value
                 tarea.tarea = inputTarea.value
             }
-            console.log(tarea.responsable)
-            console.log(tarea.tarea)
         })
+        localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
+        inputResponsable.value = ''
+        inputTarea.value = ''
     }
 
     document.getElementById('clearList').addEventListener('click', function(event){

@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function(event){
         }
         let id1 = parseInt(id)
         listaTareas = listaTareas.filter(element => element.id !== id1)
-        console.log(listaTareas)
         localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
     }

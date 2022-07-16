@@ -70,23 +70,24 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     
     function editarTarea(id){
-        let tareaAEditar = listaTareas.filter(tarea => tarea.id === id)
-        inputResponsable.value = tareaAEditar.responsable
-        inputTarea.value = tareaAEditar.tarea
-        console.log(tareaAEditar)
-        console.log(id)
+        let tareaAEditar = listaTareas.filter((tarea) => tarea.id == id)
+        inputResponsable.value = tareaAEditar[0].responsable
+        inputTarea.value = tareaAEditar[0].tarea
     }
     
     let updateButton = document.getElementById('botonActualizar')
     updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.id))
     
+    
     function actualizarTarea(id){
+        event.preventDefault()
         listaTareas.forEach(tarea=>{
             if(tarea.id === id){
-                tarea.responsable = responsable.value
-                tarea.tarea = tarea.value
+                tarea.responsable = inputResponsable.value
+                tarea.tarea = inputTarea.value
             }
         })
+        console.log(id)
     }
 
     document.getElementById('clearList').addEventListener('click', function(event){

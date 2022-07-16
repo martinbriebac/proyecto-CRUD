@@ -50,17 +50,23 @@ document.addEventListener("DOMContentLoaded", function(event){
         }else{
             listaTareas = JSON.parse(listaGuardada)
         }
-        let id = listaTareas[listaTareas.length-1]?.id || 0;
-        let nuevaTarea = {
-            id: id+1,
-            responsable: inputResponsable.value,
-            tarea: inputTarea.value
+        if(inputResponsable.value === '' || inputTarea.value === ''){
+            alert('Rellena ambos cuadros antes de enviar.')
+
+        }else{
+            let id = listaTareas[listaTareas.length-1]?.id || 0;
+            let nuevaTarea = {
+                id: id+1,
+                responsable: inputResponsable.value,
+                tarea: inputTarea.value
+            }
+            listaTareas.push(nuevaTarea)
+            localStorage.setItem('lista', JSON.stringify(listaTareas))
+            listarTarea()
+            inputResponsable.value = ''
+            inputTarea.value = ''
+
         }
-        listaTareas.push(nuevaTarea)
-        localStorage.setItem('lista', JSON.stringify(listaTareas))
-        listarTarea()
-        inputResponsable.value = ''
-        inputTarea.value = ''
     }
     
     function borrarTarea(id){
@@ -85,18 +91,22 @@ document.addEventListener("DOMContentLoaded", function(event){
     updateButton.style.display = 'none'
 
     function actualizarTarea(id){
-        listaTareas.forEach(tarea=>{
-            if(tarea.id == id){
-                tarea.responsable = inputResponsable.value
-                tarea.tarea = inputTarea.value
-            }
-        })
-        localStorage.setItem('lista', JSON.stringify(listaTareas))
-        listarTarea()
-        inputResponsable.value = ''
-        inputTarea.value = ''
-        addButton.style.display = ''
-        updateButton.style.display = 'none'
+        if(inputResponsable.value === '' || inputTarea.value === ''){
+            alert('Rellena ambos cuadros antes de enviar.')
+        }else{
+            listaTareas.forEach(tarea=>{
+                if(tarea.id == id){
+                    tarea.responsable = inputResponsable.value
+                    tarea.tarea = inputTarea.value
+                }
+            })
+            localStorage.setItem('lista', JSON.stringify(listaTareas))
+            listarTarea()
+            inputResponsable.value = ''
+            inputTarea.value = ''
+            addButton.style.display = ''
+            updateButton.style.display = 'none'
+        }
     }
 
     document.getElementById('clearList').addEventListener('click', function(event){

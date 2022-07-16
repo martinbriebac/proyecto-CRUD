@@ -35,8 +35,6 @@ document.addEventListener("DOMContentLoaded", function(event){
         botonEditar.forEach((button)=>{
             button.addEventListener('click', (event) => editarTarea(event.target.id))
         })
-        let updateButton = document.getElementById('botonActualizar')
-        updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.getAttribute('elemento')))
         
     }
     
@@ -77,10 +75,14 @@ document.addEventListener("DOMContentLoaded", function(event){
         let tareaAEditar = listaTareas.filter((tarea) => tarea.id == id)
         inputResponsable.value = tareaAEditar[0].responsable
         inputTarea.value = tareaAEditar[0].tarea
+        updateButton.style.display = ''
+        addButton.style.display = 'none'
     }
     
     let updateButton = document.getElementById('botonActualizar')
     updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.getAttribute('elemento')))
+
+    updateButton.style.display = 'none'
 
     function actualizarTarea(id){
         listaTareas.forEach(tarea=>{
@@ -93,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function(event){
         listarTarea()
         inputResponsable.value = ''
         inputTarea.value = ''
+        addButton.style.display = ''
+        updateButton.style.display = 'none'
     }
 
     document.getElementById('clearList').addEventListener('click', function(event){

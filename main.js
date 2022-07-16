@@ -18,23 +18,27 @@ document.addEventListener("DOMContentLoaded", function(event){
             <th scope="row">${index+1}</th>
             <td>${tarea.responsable}</td>
             <td>${tarea.tarea}</td>
-            <td><button type="button" class="btn btn-primary editar"><i class="fa-regular fa-pen-to-square"></i></button></td>
-            <td><button type="button" class="btn btn-danger borrar" id="${tarea.id}"><i class="fa-regular fa-trash-can"></i></button></td>
+            <td><button type="button" class="btn btn-primary editar" id="${tarea.id}">Editar</i></button></td>
+            <td><button type="button" class="btn btn-danger borrar" id="${tarea.id}">Borrar</button></td>
             </tr>
             `
             
         })
         
-        let botonBorrar = Array.from(document.getElementsByClassName('btn btn-danger borrar'))
+        let botonBorrar = Array.from(document.getElementsByClassName('borrar'))
         botonBorrar.forEach((button)=>{
-            button.addEventListener('click', (event)=>borrarTarea(event.target.id))
+            button.addEventListener('click', (event) => borrarTarea(event.target.id))
+        })
+        let botonEditar = Array.from(document.getElementsByClassName('editar'))
+        botonEditar.forEach((button)=>{
+            button.addEventListener('click', (event) => editarTarea(event.target.id))
         })
     }
     
     let inputResponsable = document.getElementById('responsable')
     let inputTarea = document.getElementById('tarea')
-    let addButton = document.getElementById('botonEnviar')
     
+    let addButton = document.getElementById('botonEnviar')
     addButton.addEventListener('click', (event)=>agregaTarea(event))
     
     function agregaTarea(event){
@@ -58,39 +62,31 @@ document.addEventListener("DOMContentLoaded", function(event){
         inputTarea.value = ''
     }
     
-    let botonBorrar = Array.from(document.getElementsByClassName('btn btn-danger borrar'))
-    botonBorrar.forEach((button)=>{
-        botonBorrar.addEventListener('click', (event) => console.log(event.target.getAttribute('elemento')))
-    })
-    
     function borrarTarea(id){
-        botonBorrar.setAttribute('elemento', id)
-        let listaGuardada = localStorage.getItem('lista')
-        if(listaGuardada == null){
-            listaTareas = []
-        }else{
-            listaTareas = JSON.parse(listaGuardada)
-        }
-        let id1 = parseInt(id)
-        listaTareas = listaTareas.filter(element => element.id !== id1)
+        listaTareas = listaTareas.filter(element => element.id != id)
         localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
     }
     
-    // let botonEditar = Array.from(document.getElementsByClassName('btn btn-danger editar'))
-    // botonEditar.forEach((button)=>{
-    //     button.addEventListener('click', (event)=>editarTarea(event.target.id))
-    // })
-
-    // function editarTarea(id, tarea, responsable){
-    //     listaTareas.forEach((element) => {
-    //         if(id === element.id){
-    //             element.responsable = inputResponsable,
-    //             element.tarea = inputTarea
-    //         }
-    //     })
-    // }
     
+    function editarTarea(id){
+        let tareaAEditar = listaTareas.filter((tarea) => tarea.id === id)
+        inputResponsable.value = tareaAEditar.responsable
+        tarea.value = tareaAEditar.tarea
+    }
+    
+    let updateButton = document.getElementById('botonActualizar')
+    updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.id))
+    
+    function actualizarTarea(id){
+        listaTareas.forEach(tarea=>{
+            if(tarea.id === id){
+                tarea.responsable = responsable.value
+                tarea.tarea = tarea.value
+            }
+        })
+    }
+
     document.getElementById('clearList').addEventListener('click', function(event){
         event.preventDefault()
         window.localStorage.removeItem('lista')

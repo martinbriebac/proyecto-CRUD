@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function(event){
     let listaTareas = []
     
     
+    let inputResponsable = document.getElementById('responsable')
+    let inputTarea = document.getElementById('tarea')
     let lista = document.getElementById('listaElementos')
     
     function listarTarea(){
@@ -33,10 +35,11 @@ document.addEventListener("DOMContentLoaded", function(event){
         botonEditar.forEach((button)=>{
             button.addEventListener('click', (event) => editarTarea(event.target.id))
         })
+        let updateButton = document.getElementById('botonActualizar')
+        updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.getAttribute('elemento')))
+        
     }
     
-    let inputResponsable = document.getElementById('responsable')
-    let inputTarea = document.getElementById('tarea')
     
     let addButton = document.getElementById('botonEnviar')
     addButton.addEventListener('click', (event)=>agregaTarea(event))
@@ -70,24 +73,25 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     
     function editarTarea(id){
+        updateButton.setAttribute('elemento', id)
         let tareaAEditar = listaTareas.filter((tarea) => tarea.id == id)
         inputResponsable.value = tareaAEditar[0].responsable
         inputTarea.value = tareaAEditar[0].tarea
     }
     
     let updateButton = document.getElementById('botonActualizar')
-    updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.id))
-    
-    
+    updateButton.addEventListener('click', (event)=>actualizarTarea(event.target.getAttribute('elemento')))
+
     function actualizarTarea(id){
-        event.preventDefault()
         listaTareas.forEach(tarea=>{
-            if(tarea.id === id){
+            if(tarea.id == id){
                 tarea.responsable = inputResponsable.value
                 tarea.tarea = inputTarea.value
             }
+            console.log(tarea.responsable)
+            console.log(tarea.tarea)
         })
-        console.log(id)
+        listarTarea()
     }
 
     document.getElementById('clearList').addEventListener('click', function(event){

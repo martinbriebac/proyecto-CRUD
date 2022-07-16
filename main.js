@@ -63,16 +63,18 @@ document.addEventListener("DOMContentLoaded", function(event){
     }
     
     function borrarTarea(id){
-        listaTareas = listaTareas.filter(element => element.id != id)
+        listaTareas = listaTareas.filter(element => element.id !== id)
         localStorage.setItem('lista', JSON.stringify(listaTareas))
         listarTarea()
     }
     
     
     function editarTarea(id){
-        let tareaAEditar = listaTareas.filter((tarea) => tarea.id === id)
+        let tareaAEditar = listaTareas.filter(tarea => tarea.id === id)
         inputResponsable.value = tareaAEditar.responsable
-        tarea.value = tareaAEditar.tarea
+        inputTarea.value = tareaAEditar.tarea
+        console.log(tareaAEditar)
+        console.log(id)
     }
     
     let updateButton = document.getElementById('botonActualizar')
